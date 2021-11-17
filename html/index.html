@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>Sistema Recomendador</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+        <h1>Sistema recomendador</h1>
+        <h2>Introduzca los siguientes datos:</h2>
+        <form>
+            <p>Introduzca la matriz</p>
+            <input type="file" id="matrixFile">
+
+            <p>Seleccione la métrica</p>
+            <select id="metric">
+                <option selected value=1>Pearson</option>
+                <option value=2>Distancia coseno</option>
+                <option value=3>Distancia euclídea</option>
+            </select>
+
+            <p>Seleccione el número de vecinos</p>
+            <input type="number" id="neighbors" value=1>
+
+            <p>Seleccione el tipo de predicción</p>
+            <select id="prediction">
+                <option selected value=1>Simple</option>
+                <option value=2>Diferencia con la media</option>            
+            </select>
+
+            <br>
+            <br>
+            <button type="button" id="btnAccept">Aceptar</button>
+        </form>
+        <script type="text/javascript" src="../script/main.js"></script>
+    </body>
+</html>
