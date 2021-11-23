@@ -105,9 +105,11 @@ function generateSimilaritiesMatrix(matrix, method) {
             if(j >= i){
                 break;
             }
-            obtainSimilarityIndex(matrix, i, j, method)
+            result[i][j] = obtainSimilarityIndex(matrix, i, j, method);
+            result[j][i] = result[i][j];
         }
     }
+    console.log(result);
 }
 
 function obtainSimilarityIndex(matrix, i, j, method){
@@ -119,7 +121,7 @@ function obtainSimilarityIndex(matrix, i, j, method){
             console.log("Distancia euclidea")
             break;
         default:
-            console.log("Método Pearson")
+            return pearson(matrix, i, j);
             break;
     }
 }
@@ -128,17 +130,21 @@ function arrayAvg(array){
     let result = 0;
     let total = 0;
     array.forEach((e) => {
-        if(e != "-")
-        result += Number(e);
-        total ++;
+        if(e != "-"){
+            result += Number(e);
+            total ++;
+        }
     });
-
-    return (result/total);
+    if(result == 0 || total == 0){
+        return 0;
+    } else {
+        return (result/total);
+    }
 }
 function pearson(matrix, u, v) {
     let Suv = [];
     for(let i = 0; i < matrix[0].length; i++) {
-        if(matrix[u][i] !== "-" && matrix[u][i]){
+        if(matrix[u][i] !== "-" && matrix[v][i] !== "-"){
             Suv.push(i);
         }
     }
@@ -147,18 +153,20 @@ function pearson(matrix, u, v) {
     }
     let t1 = 0, t2 = 0, t3 = 0;
     for(let i = 0; i < Suv.length; i++) {
-        t1 += (matrix[u][i] - arrayAvg(matrix[u]))*(matrix[v][i] - arrayAvg(matrix[v]));
+        t1 += (Number(matrix[u][Suv[i]]) - arrayAvg(matrix[u]))*(Number(matrix[v][Suv[i]]) - arrayAvg(matrix[v]));
     }
     for(let i = 0; i < Suv.length; i++) {
-        t2 += Math.pow((matrix[u][i] - arrayAvg(matrix[u])), 2);
+        t2 += Math.pow((Number(matrix[u][Suv[i]]) - arrayAvg(matrix[u])), 2);
     }
     for(let i = 0; i < Suv.length; i++) {
-        t3 += Math.pow((matrix[v][i] - arrayAvg(matrix[v])), 2);
+        t3 += Math.pow((Number(matrix[v][Suv[i]]) - arrayAvg(matrix[v])), 2);
     }
-
-    return t1/(t2*t3)
+    t2 = Math.sqrt(t2);
+    t3 = Math.sqrt(t3);
+    console.log("avg = " + arrayAvg(matrix[u]));
+    return t1/(t2*t3);
 }
 
-function cosDistance() {}
+function cosDistance(matrix, u, v) {}
 
 function euclidean() {}
