@@ -213,11 +213,17 @@ function euclidean(matrix, u, v) {
 
 //Rellena los espacios nulos de la matriz aplicando predicción simple
 function simpPrediction(matrix, sim, k, method) {
+    output = document.getElementById("outputNeighbors");
+    let auxstr = "";
     for (let i = 0; i < matrix.length; i++) {
         if(matrix[i].indexOf("-") !== -1) {
+            auxstr += "<p>Vecinos seleccionados para el Usuario " + String(i) + ": ";
             let N = [];
             for(let j = 0; j < k; j++) {
                 let maxval = 0;
+                while(N.indexOf(maxval) != -1){
+                    maxval ++;
+                }
                 for (let e = 0; e < matrix[i].length; e++) {
                     if((Number(sim[i][e]) >= Number(sim[i][maxval])) && (N.indexOf(e) == -1) && (i != e)) {
                         maxval = e;
@@ -251,17 +257,28 @@ function simpPrediction(matrix, sim, k, method) {
                     }
                 }
             }
+            for (let j = 0; j < N.length; j++) {
+                auxstr += "Usuario " + String(N[j]) + ", ";
+            }
+            auxstr += "</p>";
         }  
     }
+    output.innerHTML = auxstr;
 }
 
 //Rellena los espacios nulos de la matriz aplicando una predicción que evalua la distancia con la media
 function avgPrediction(matrix, sim, k, method) {
+    output = document.getElementById("outputNeighbors");
+    let auxstr = "";
     for (let i = 0; i < matrix.length; i++) {
         if(matrix[i].indexOf("-") !== -1) {
+            auxstr += "<p>Vecinos seleccionados para el Usuario " + String(i) + ": ";
             let N = [];
             for(let j = 0; j < k; j++) {
                 let maxval = 0;
+                while(N.indexOf(maxval) != -1){
+                    maxval ++;
+                }
                 for (let e = 0; e < matrix[i].length; e++) {
                     if((Number(sim[i][e]) >= Number(sim[i][maxval])) && (N.indexOf(e) == -1) && (i != e)) {
                         maxval = e;
@@ -295,8 +312,14 @@ function avgPrediction(matrix, sim, k, method) {
                     }
                 }
             }
+            console.log(N);
+            for (let j = 0; j < N.length; j++) {
+                auxstr += "Usuario " + String(N[j]) + ", ";
+            }
+            auxstr += "</p>";
         }  
     }
+    output.innerHTML = auxstr;
 }
 
 //Carga el contenido en el DOM de la página
