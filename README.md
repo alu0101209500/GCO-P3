@@ -329,11 +329,17 @@ Para calcular la predicción se han implementado las siguientes funciones
 ### Predicción simple
 ~~~javascript
 function simpPrediction(matrix, sim, k, method) {
+    output = document.getElementById("outputNeighbors");
+    let auxstr = "";
     for (let i = 0; i < matrix.length; i++) {
         if(matrix[i].indexOf("-") !== -1) {
+            auxstr += "<p>Vecinos seleccionados para el Usuario " + String(i) + ": ";
             let N = [];
             for(let j = 0; j < k; j++) {
                 let maxval = 0;
+                while(N.indexOf(maxval) != -1){
+                    maxval ++;
+                }
                 for (let e = 0; e < matrix[i].length; e++) {
                     if((Number(sim[i][e]) >= Number(sim[i][maxval])) && (N.indexOf(e) == -1) && (i != e)) {
                         maxval = e;
@@ -367,8 +373,13 @@ function simpPrediction(matrix, sim, k, method) {
                     }
                 }
             }
+            for (let j = 0; j < N.length; j++) {
+                auxstr += "Usuario " + String(N[j]) + ", ";
+            }
+            auxstr += "</p>";
         }  
     }
+    output.innerHTML = auxstr;
 }
 ~~~
 
@@ -377,11 +388,17 @@ Para cada usuario con ítems sin calificar, evalúa los K vecinos más similares
 
 ~~~javascript
 function avgPrediction(matrix, sim, k, method) {
+    output = document.getElementById("outputNeighbors");
+    let auxstr = "";
     for (let i = 0; i < matrix.length; i++) {
         if(matrix[i].indexOf("-") !== -1) {
+            auxstr += "<p>Vecinos seleccionados para el Usuario " + String(i) + ": ";
             let N = [];
             for(let j = 0; j < k; j++) {
                 let maxval = 0;
+                while(N.indexOf(maxval) != -1){
+                    maxval ++;
+                }
                 for (let e = 0; e < matrix[i].length; e++) {
                     if((Number(sim[i][e]) >= Number(sim[i][maxval])) && (N.indexOf(e) == -1) && (i != e)) {
                         maxval = e;
@@ -415,8 +432,14 @@ function avgPrediction(matrix, sim, k, method) {
                     }
                 }
             }
+            console.log(N);
+            for (let j = 0; j < N.length; j++) {
+                auxstr += "Usuario " + String(N[j]) + ", ";
+            }
+            auxstr += "</p>";
         }  
     }
+    output.innerHTML = auxstr;
 }
 ~~~
 
